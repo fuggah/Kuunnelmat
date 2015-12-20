@@ -1,0 +1,2 @@
+module KuunnelmaHelper
+end
