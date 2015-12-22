@@ -1,0 +1,20 @@
+<script>
+	function SelectKuunnelmat()
+	{
+		var mydiv = document.getElementsByTagName('dataarea');
+	/*	alert("SelectKuunnelmat");*/
+	}
+</script>
+
+<div id="tagarea">
+<!--	<%= form_tag( controller: 'kuunnelmas', action: 'search') do %>-->
+	<%= select_tag('tags', options_from_collection_for_select(Tag.all, 'id', 'tag'), { :size => Tag.all.size, :multiple => true, :onchange =>'SelectKuunnelmat()' }) %>
+<!--	<% end %>-->
+</div>
+<div id="dataarea">
+	<ul>
+		<% @kuunnelmas.each do |k| %>
+		<li><a href="/api/kuunnelmas/<%=k.id%>.html"><%= k.name %></a></li>
+		<% end %>
+	</ul>
+</div>
