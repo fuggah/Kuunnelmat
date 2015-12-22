@@ -11,18 +11,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126202245) do
+ActiveRecord::Schema.define(version: 20151130171129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "kuunnelmas", force: :cascade do |t|
+    t.string   "name"
+    t.string   "author"
+    t.string   "composer"
+    t.string   "note"
+    t.integer  "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "kuunnelmatags", force: :cascade do |t|
+    t.integer  "kuunnelma_id", null: false
+    t.integer  "tag_id",       null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "kuunnelmatags", ["kuunnelma_id"], name: "index_kuunnelmatags_on_kuunnelma_id", using: :btree
+  add_index "kuunnelmatags", ["tag_id"], name: "index_kuunnelmatags_on_tag_id", using: :btree
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "tag",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "firstname"
     t.string   "lastname"
     t.string   "email"
     t.string   "password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "temp_password"
+    t.string   "nickname"
+    t.boolean  "confirmation",  default: false, null: false
   end
+
+  add_index "users", ["nickname"], name: "index_users_on_nickname", unique: true, using: :btree
 
 end

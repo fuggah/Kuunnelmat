@@ -6,11 +6,7 @@ class Api::UsersController < ApplicationController
 	skip_before_action :verify_authenticity_token
 	
 	private def user_params
-	    params.require(:user).permit(:email, :firstname, :lastname, :password )
-	end
-
-	def fetch_user
-		@user = User.find_by_id(params[:id])
+	    params.require(:user).permit(:email, :firstname, :lastname, :password, :nickname, :confirmation )
 	end
 
 	def index
@@ -23,7 +19,8 @@ class Api::UsersController < ApplicationController
 	end
 
 	def show
-
+		@user = User.find_by_id(params[:id])
+		
 		respond_to do |format|
 			format.json { render json: @user }
 			format.xml { render xml: @user }
@@ -46,8 +43,10 @@ class Api::UsersController < ApplicationController
 	end
 
 	def update
+		@user =User.find_by_id(params[:id])
+		
 		respond_to do |format|
-			if @user.update_attributes(params[:user])
+			if @user.update_attributes(user_params)
 				format.json { head :no_content, status: :ok }
 				format.xml { head :no_content, status: :ok }
 			else

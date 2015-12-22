@@ -9,16 +9,36 @@ class Api::KuunnelmasController < ApplicationController
 		@kuunnelmas = Kuunnelma.all
 
 		respond_to do |format|
+			format.html
 			format.json { render json: @kuunnelmas }
 			format.xml { render xml: @kuunnelmas }
 		end
 	end
 
+	def search
+		@kuunnelmas =Kuunnelma.all
+
+		respond_to do |format|
+			format.html
+			format.json { render json: @kuunnelmas }
+			format.xml { render xml: @kuunnelmas }
+		end
+	end
+
+	def tags
+		@tags =Kuunnelma.find_by_id(params[:id]).kuunnelmatags.all
+
+		respond_to do |format|
+			format.json { render json: @tags }
+			format.xml { render xml: @tags }
+		end
+	end
+
 	def show
 		@kuunnelma = Kuunnelma.find_by_id(params[:id])
-#		@kuunnelmatags =@kuunnelma.kuunnelmatags
-		
+
 		respond_to do |format|
+			format.html
 			format.json { render json: @kuunnelma }
 			format.xml { render xml: @kuunnelma }
 		end
@@ -40,7 +60,7 @@ class Api::KuunnelmasController < ApplicationController
 
 	def update
 		@kuunnelma =Kuunnelma.find_by_id(params[:id])
-		
+
 		respond_to do |format|
 			if @kuunnelma.update_attributes(kuunnelma_params)
 				format.json { head :no_content, status: :ok }
@@ -54,7 +74,7 @@ class Api::KuunnelmasController < ApplicationController
 
 	def destroy
 		@kuunnelma =Kuunnelma.find_by_id(params[:id])
-		
+
 		respond_to do |format|
 			if @kuunnelma.destroy
 				format.json { head :no_content, status: :ok }

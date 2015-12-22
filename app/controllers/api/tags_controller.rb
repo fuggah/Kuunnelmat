@@ -1,4 +1,6 @@
 class Api::TagsController < ApplicationController
+	helper ApplicationHelper
+
 	skip_before_action :verify_authenticity_token
 
 	private def tag_params
@@ -9,6 +11,7 @@ class Api::TagsController < ApplicationController
 		@tags = Tag.all
 
 		respond_to do |format|
+			format.html
 			format.json { render json: @tags }
 			format.xml { render xml: @tags }
 		end
@@ -16,8 +19,9 @@ class Api::TagsController < ApplicationController
 
 	def show
 		@tag = Tag.find_by_id(params[:id])
-		
+
 		respond_to do |format|
+			format.html
 			format.json { render json: @tag }
 			format.xml { render xml: @tag }
 		end
@@ -39,7 +43,7 @@ class Api::TagsController < ApplicationController
 
 	def update
 		@tag =Tag.find_by_id(params[:id])
-		
+
 		respond_to do |format|
 			if @tag.update_attributes(tag_params)
 				format.json { head :no_content, status: :ok }
@@ -53,7 +57,7 @@ class Api::TagsController < ApplicationController
 
 	def destroy
 		@tag =Tag.find_by_id(params[:id])
-		
+
 		respond_to do |format|
 			if @tag.destroy
 				format.json { head :no_content, status: :ok }
