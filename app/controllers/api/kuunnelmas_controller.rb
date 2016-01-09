@@ -25,25 +25,6 @@ class Api::KuunnelmasController < ApplicationController
 		@kuunnelmas =Kuunnelma.all
 	end
 
-	def search
-		@kuunnelmas =Kuunnelma.all
-
-		respond_to do |format|
-			format.html
-			format.json { render json: @kuunnelmas }
-			format.xml { render xml: @kuunnelmas }
-		end
-	end
-
-	def tags
-		@tags =Kuunnelma.find_by_id(params[:id]).kuunnelmatags.all
-
-		respond_to do |format|
-			format.json { render json: @tags }
-			format.xml { render xml: @tags }
-		end
-	end
-
 	def show
 		@kuunnelma = Kuunnelma.find_by_id(params[:id])
 
