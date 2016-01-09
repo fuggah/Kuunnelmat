@@ -58,6 +58,8 @@ Rails.application.routes.draw do
   #   end
 
 	namespace :api do
+		get 'kuunnelmas/filter' => 'kuunnelmas#filter', as: 'filter_kuunnelmas'
+
 		resources :users, :defaults => { :format => 'json' }
 		resources :kuunnelmas, :defaults => { :format => 'json' }
 		resources :tags, :defaults => { :format => 'json' }

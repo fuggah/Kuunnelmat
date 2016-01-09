@@ -5,14 +5,24 @@ class Api::KuunnelmasController < ApplicationController
 	    params.require(:kuunnelma).permit(:name, :author, :composer)
 	end
 
-	def index
-		@kuunnelmas = Kuunnelma.all
+	def filter
 
-		respond_to do |format|
-			format.html
-			format.json { render json: @kuunnelmas }
-			format.xml { render xml: @kuunnelmas }
+		p params
+
+		selected_tags = {}
+		selected_tags = params[:selected_tags] if params.has_key?(:selected_tags)
+
+		if (0 ==selected_tags.length)
+			selected_tags = Tag.all.pluck("id")
 		end
+
+		@kuunnelmas =Kuunnelma.where("id in (?)", Kuunnelmatag.where("tag_id in(?)", selected_tags).uniq.pluck("kuunnelma_id"))
+
+		render :partial => 'filter', :content_type => 'text/html'
+	end
+
+	def index
+		@kuunnelmas =Kuunnelma.all
 	end
 
 	def search

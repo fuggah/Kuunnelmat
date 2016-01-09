@@ -1,0 +1,7 @@
+<div id="filter">
+	<ul>
+		<% @kuunnelmas.each do |kuunnelma| %>
+			<li><%= link_to kuunnelma.name, api_kuunnelma_path(kuunnelma) %>
+		<% end %>
+	</ul>
+</div>
